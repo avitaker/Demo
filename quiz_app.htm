@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Just a small quiz</title>
+<!--<link rel="stylesheet" type="text/css" href="http://localhost:31338/quiz_app_css.css">-->
+<style>
+.slideSign{
+	color:'grey';
+}
+
+body {
+	background-color:#fbf8c0;
+	font-family:"Arial",sans-serif;
+}
+
+h3 {
+	text-align:center;
+}
+
+#quiz_navigation_bar{
+	padding-top:5px;
+}
+
+#next_button {
+   border-top: 1px solid #f5fbff;
+   background: #27b07e;
+   background: -webkit-gradient(linear, left top, left bottom, from(#29b073), to(#27b07e));
+   background: -webkit-linear-gradient(top, #29b073, #27b07e);
+   background: -moz-linear-gradient(top, #29b073, #27b07e);
+   background: -ms-linear-gradient(top, #29b073, #27b07e);
+   background: -o-linear-gradient(top, #29b073, #27b07e);
+   padding: 7px 14px;
+   -webkit-border-radius: 2px;
+   -moz-border-radius: 2px;
+   border-radius: 2px;
+   /*-webkit-box-shadow: rgba(0,0,0,1) 0 1px 0;
+   -moz-box-shadow: rgba(0,0,0,1) 0 1px 0;
+   box-shadow: rgba(0,0,0,1) 0 1px 0;*/
+   text-shadow: rgba(0,0,0,.4) 0 1px 0;
+   color: white;
+   font-size: 13px;
+   font-family: Helvetica, Arial, Sans-Serif;
+   text-decoration: none;
+   vertical-align: middle;
+   }
+#next_button:hover {
+   border-top-color: #3ae04d;
+   background: #3ae04d;
+   color: #fcfcfc;
+   }
+#next_button:active {
+   border-top-color: #1b435e;
+   background: #197319;
+   }
+#next_button:disabled {
+	background:grey;
+	color:#27b07e;
+	text-decoration:line-through;
+}
+
+#back_button {
+   border-top: 1px solid #f5fbff;
+   background: #5437a6;
+   background: -webkit-gradient(linear, left top, left bottom, from(#525891), to(#5437a6));
+   background: -webkit-linear-gradient(top, #525891, #5437a6);
+   background: -moz-linear-gradient(top, #525891, #5437a6);
+   background: -ms-linear-gradient(top, #525891, #5437a6);
+   background: -o-linear-gradient(top, #525891, #5437a6);
+   padding: 7px 14px;
+   -webkit-border-radius: 2px;
+   -moz-border-radius: 2px;
+   border-radius: 2px;
+   /*-webkit-box-shadow: rgba(0,0,0,1) 0 1px 0;
+   -moz-box-shadow: rgba(0,0,0,1) 0 1px 0;
+   box-shadow: rgba(0,0,0,1) 0 1px 0;*/
+   text-shadow: rgba(0,0,0,.4) 0 1px 0;
+   color: white;
+   font-size: 13px;
+   font-family: Helvetica, Arial, Sans-Serif;
+   text-decoration: none;
+   vertical-align: middle;
+   }
+#back_button:hover {
+   border-top-color: #ba39de;
+   background: #ba39de;
+   color: #fcfcfc;
+   }
+#back_button:active {
+   border-top-color: #1b435e;
+   background: red;
+   }
+#back_button:disabled {
+	background:grey;
+	color:#5437a6;
+	text-decoration:line-through;
+}
+
+#finish_button {
+   border-top: 1px solid #f2edea;
+   background: #e0892d;
+   background: -webkit-gradient(linear, left top, left bottom, from(#f58f11), to(#e0892d));
+   background: -webkit-linear-gradient(top, #f58f11, #e0892d);
+   background: -moz-linear-gradient(top, #f58f11, #e0892d);
+   background: -ms-linear-gradient(top, #f58f11, #e0892d);
+   background: -o-linear-gradient(top, #f58f11, #e0892d);
+   padding: 7px 14px;
+   -webkit-border-radius: 2px;
+   -moz-border-radius: 2px;
+   border-radius: 2px;
+   /*-webkit-box-shadow: rgba(0,0,0,1) 0 1px 0;
+   -moz-box-shadow: rgba(0,0,0,1) 0 1px 0;
+   box-shadow: rgba(0,0,0,1) 0 1px 0;*/
+   text-shadow: rgba(0,0,0,.4) 0 1px 0;
+   color: #ffffff;
+   font-size: 13px;
+   font-family: Helvetica, Arial, Sans-Serif;
+   text-decoration: none;
+   vertical-align: middle;
+   }
+#finish_button:hover {
+   border-top-color: #ff2b05;
+   background: #ff2b05;
+   color: #fcfcfc;
+   }
+#finish_button:active {
+   border-top-color: #ffea00;
+   background: #ffea00;
+   }
+
+#welcome_div{
+	padding-bottom:15px;
+}
+
+#quiz_area_div{
+	background-color:white;
+	border-radius:1px;
+}
+
+#question_here{
+	padding:5px;
+}
+
+#answer_options{
+	padding-bottom:5px;
+}
+
+/*#corrections_here{
+	padding-bottom:15px;
+	background:#caccc5;
+	border-radius:0px 0px 1px 1px;
+}*/
+
+.wrong_question{
+	color:black;
+}
+
+.wrong_choice{
+	color:#ff0000;
+}
+
+.correct_choice{
+	color:#096600;
+}
+
+#final_mistakes{
+	background-color:#2E0854;
+	color:white;
+	border-top-right-radius:5px;
+	border-bottom-left-radius:5px;
+	font-family:Times,serif;
+}
+
+#expander{
+	padding:4px;
+	font-size:105%
+}
+
+.each_correction{
+	padding-bottom:15px;
+	background:#75c9cc;
+}
+</style>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<!--<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>-->
+<script type="text/javascript">
+var questionsSource="http://www.indiabix.com/general-knowledge/basic-general-knowledge/005004";
+
+
+//PREPPING QUIZ OBJECT
+function readTextFile(file){
+
+    var rawFile = new XMLHttpRequest();
+
+    rawFile.open("GET", file, false);
+
+    rawFile.onreadystatechange = function ()
+    {
+
+        if(rawFile.readyState === 4)
+        {
+
+            if(rawFile.status === 200 || rawFile.status == 0)
+            {
+
+                var allText = rawFile.responseText;
+ }
+        }
+    }
+
+    	       rawFile.send(null); 
+return rawFile.responseText;
+}
+
+var quizObject=readTextFile("http://localhost:31338/quizAppJSON.txt").toString();
+var quizObjectJSON=JSON.parse(quizObject);
+var answeredQuiz=quizObjectJSON;
+
+//POPULATE HTML COMPONENTS
+function questionGenerate(objectArray, objectArrayNumber){
+	var stringQuestion='';
+	stringQuestion=objectArray[objectArrayNumber].question;
+	return stringQuestion;
+}
+
+function choicesGenerate(objectArray,objectArrayNumber,optionNumber){
+	var stringOption='';
+	stringOption=objectArray[objectArrayNumber].choices[optionNumber];
+	return stringOption;
+}
+
+//BACKGROUND PROCESSES (STORE ANSWER (check "nextButton()", SCORE THE QUIZ)
+var currentQuestion=0;
+var currentScore=0;
+
+function recordAnswer(){
+	var questionForm=document.getElementById("answer_options").elements;
+	for (m=0;m<questionForm.length;m++){
+		if (questionForm[m].checked){
+			answeredQuiz[currentQuestion-1].userAnswer=m;
+		}
+	}
+}
+
+function evaluateScore(){
+	var finalScore=0;
+	var wrongAnswers=[];
+	for (i=0;i<answeredQuiz.length;i++){
+		if (answeredQuiz[i].userAnswer===answeredQuiz[i].correctAnswer){
+			finalScore+=1;
+		} else {wrongAnswers.push(i+1);}
+	}
+	return [finalScore,wrongAnswers];
+}
+
+function findSelectedChoice(num){
+	var returnThis;
+	if (answeredQuiz[num].userAnswer){
+		returnThis=answeredQuiz[num].userAnswer;
+	}
+	return returnThis;
+}
+
+function checkForAnswer(formElement){
+	var form=document.getElementById(formElement);
+	var trackChecked=0;
+	for (i=0;i<form.elements.length;i++){
+		if (form.elements[i].checked){
+			trackChecked+=1;
+		} else {continue;}
+	}
+	if (trackChecked===0){
+		alert("You must select an answer before continuing");
+		return false;
+	} else {return true;}
+}
+
+function populatePastAnswer(num){
+	var ifAnswer=answeredQuiz[num-1].userAnswer;
+	var formElement=document.getElementById('answer_options');
+	if (ifAnswer!=undefined){
+		formElement.elements[ifAnswer].checked=true;
+		return true;
+	} else {return false;}
+}
+
+
+
+//RELOAD QUESTION DIV, AND BUTTON ONCLICKS
+function nextButton(){
+	var questionString='<p id="question_here">'+questionGenerate(quizObjectJSON,currentQuestion)+'</p><form id="answer_options"><input type="radio" name="which_one" id="answer_choice_1">'+choicesGenerate(quizObjectJSON,currentQuestion,0)+'<br><input type="radio" name="which_one" id="answer_choice_2">'+choicesGenerate(quizObjectJSON,currentQuestion,1)+'<br><input type="radio" name="which_one" id="answer_choice_3">'+choicesGenerate(quizObjectJSON,currentQuestion,2)+'<br><input type="radio" name="which_one" id="answer_choice_4">'+choicesGenerate(quizObjectJSON,currentQuestion,3)+'<br>';
+	if (checkForAnswer("answer_options")){
+		recordAnswer();
+//VERY IMPORTANT TWO LINES OF CODE HERE TO ENSURE ALL OF THE PASSED ARGUMENT IS PASSED BEFORE CALLBACK IS EXECUTED!
+		var animated=false;
+		var animateProp={duration:200,easing:"swing",done:function(){if (!animated){animated=true; completeRepopulate();};}};
+		function repopulate(){
+			document.getElementById("add_this_div").innerHTML=questionString;
+		}
+		function completeRepopulate(){
+			repopulate();
+			if (currentQuestion<quizObjectJSON.length-1){
+				currentQuestion+=1;
+			} else {currentQuestion=quizObjectJSON.length;}
+			populatePastAnswer(currentQuestion);
+			if (currentQuestion<quizObjectJSON.length-1){
+				if (currentQuestion===1){
+					document.getElementById('back_button').disabled=true;
+				} else {document.getElementById('back_button').disabled=false;}
+			} else if (currentQuestion===quizObjectJSON.length){
+				document.getElementById('next_button').disabled=true;
+				finishButtonPopulate();
+			}			
+		}
+		$('#add_this_div').fadeOut(animateProp);
+		$('#add_this_div').fadeIn(200);
+	}
+}
+
+function nextButtonOnclick(){
+	var questionString='<p id="question_here">'+questionGenerate(quizObjectJSON,currentQuestion)+'</p><form id="answer_options"><input type="radio" name="which_one" id="answer_choice_1">'+choicesGenerate(quizObjectJSON,currentQuestion,0)+'<br><input type="radio" name="which_one" id="answer_choice_2">'+choicesGenerate(quizObjectJSON,currentQuestion,1)+'<br><input type="radio" name="which_one" id="answer_choice_3">'+choicesGenerate(quizObjectJSON,currentQuestion,2)+'<br><input type="radio" name="which_one" id="answer_choice_4">'+choicesGenerate(quizObjectJSON,currentQuestion,3)+'<br>';
+	if (document.getElementById('add_this_div')===null){
+		var welcomeDiv=document.getElementById('welcome_div');
+		$('#welcome_div').slideUp();
+		$('#quiz_area_div').hide().html('<div id="add_this_div">'+questionString+'</div>').slideDown();
+		var alreadyNav=document.getElementById('quiz_navigation_form').innerHTML;
+		document.getElementById('quiz_navigation_form').innerHTML=('<input type="button" value="Go back to first question" id="back_button" onclick="backButtonOnclick()">'+alreadyNav);
+		document.getElementById('back_button').disabled=true;
+		currentQuestion+=1;
+	} else if (document.getElementById('add_this_div')!=null){
+		nextButton();
+	}
+}
+
+function finishButtonPopulate(){
+	var finishButtonString='<input type="button" value="Finish" id="finish_button" onclick="finishButtonOnclick()">';
+	document.getElementById('quiz_navigation_form').innerHTML+=finishButtonString;
+}
+
+var numOfMistakes=0;
+
+function populateFinalMistakes(listObj){
+	var returnObj=[];
+	if (listObj.length>=1){
+		for (i=0;i<listObj.length;i++){
+			var thisOne=listObj[i]-1;
+			returnObj.push(answeredQuiz[thisOne]);
+		}
+	}
+	var finalString='<div id="corrections_here" class="content">';
+	var questionString='<span class="wrong_question">On the following question: ';
+	var chosenString='<br><span class="wrong_choice">You chose: ';
+	var correctString='<br><span class="correct_choice">The correct answer is: ';
+	for (m=0;m<returnObj.length;m++){
+		var correctAnswer=returnObj[m].correctAnswer;
+		var userAnswer=returnObj[m].userAnswer;
+		finalString+='<div class="each_correction" id="corrections'+m+'">' + questionString +  returnObj[m].question + '</span>' + chosenString + returnObj[m].choices[userAnswer] + '</span>' + correctString + returnObj[m].choices[correctAnswer] + '</span>' + '</div>';
+		numOfMistakes=m;
+	}
+	return (finalString+'</div>');
+}
+
+function finishButtonOnclick(){
+	recordAnswer();
+	var finalReport=evaluateScore();
+	var finalScore=finalReport[0];
+	var listOfMistakes=finalReport[1];
+	$(function(){
+		$('#next_button').detach();
+		$('#back_button').detach();
+		$('#quiz_area_div').slideUp();
+	});
+		//document.getElementById('next_button').parentNode.removeChild(document.getElementById('next_button'));
+	//document.getElementById('quiz_area_div').parentNode.removeChild(document.getElementById('quiz_area_div'));
+	//document.getElementById('back_button').parentNode.removeChild(document.getElementById('back_button'));
+	$('#final_score_area').html('<h2 id="final_score_reveal">Your overall score on the quiz was ' + finalScore + ' points. </h2>').slideDown();
+	if (listOfMistakes.length>0){
+		$('#final_score_area').html($('#final_score_area').html()+'<div id="final_mistakes"><span id="expander">Click here to view your mistakes and the correct answers </span>' + '</div>').fadeIn();
+		var finalMistakes=populateFinalMistakes(listOfMistakes);
+		$('#final_mistakes').html($('#final_mistakes').html()+finalMistakes);
+		$(function(){
+			$('#corrections_here').css('display','none');
+			$('#expander').css('cursor','pointer');
+			$('#expander').click(function(){
+				$('#corrections_here').slideToggle('slow');
+				$(this).toggleClass('slideSign');
+				return false;
+			});
+		});
+	}
+	else {document.getElementById('final_score_area').innerHTML+='<div id="congrats_div"><span id="congrats_nerd">Congratulations! You answered all the questions correctly. </span>' + '</div>';}
+      	for (i=0;i<document.getElementById('finish_button').attributes.length;i++){
+      		if (document.getElementById('finish_button').attributes[i].name==="value"){
+      			document.getElementById('finish_button').attributes[i].value="Reload quiz";
+      		} else if (document.getElementById('finish_button').attributes[i].name==="onclick"){
+      			document.getElementById('finish_button').attributes[i].value='location.reload()';
+      		}
+      		$('#finish_button').css('padding-top','15px');
+      	}
+}
+
+function backButton(){
+	var questionString='<p id="question_here">'+questionGenerate(quizObjectJSON,0)+'</p><form id="answer_options"><input type="radio" name="which_one" id="answer_choice_1">'+choicesGenerate(quizObjectJSON,0,0)+'<br><input type="radio" name="which_one" id="answer_choice_2">'+choicesGenerate(quizObjectJSON,0,1)+'<br><input type="radio" name="which_one" id="answer_choice_3">'+choicesGenerate(quizObjectJSON,0,2)+'<br><input type="radio" name="which_one" id="answer_choice_4">'+choicesGenerate(quizObjectJSON,0,3)+'<br>';
+	//if (checkForAnswer('answer_options')){
+		recordAnswer();
+		function repopulate(){
+			document.getElementById("add_this_div").innerHTML=questionString;
+		}
+		var animated=false;
+		var animateProp={duration:200,easing:"swing",done:function(){if (!animated){animated=true; doThis();};}};
+		function doThis(){
+			repopulate();
+			populatePastAnswer(1);
+			document.getElementById('back_button').disabled=true;
+		}
+		$("#add_this_div").fadeOut(animateProp);
+		$('#add_this_div').fadeIn();
+		return true;
+	//}
+	//else {return false;}
+}
+
+function backButtonOnclick(){
+	var questionString='<p id="question_here">'+questionGenerate(quizObjectJSON,0)+'</p><form id="answer_options"><input type="radio" name="which_one" id="answer_choice_1">'+choicesGenerate(quizObjectJSON,0,0)+'<br><input type="radio" name="which_one" id="answer_choice_2">'+choicesGenerate(quizObjectJSON,0,1)+'<br><input type="radio" name="which_one" id="answer_choice_3">'+choicesGenerate(quizObjectJSON,0,2)+'<br><input type="radio" name="which_one" id="answer_choice_4">'+choicesGenerate(quizObjectJSON,0,3)+'<br>';
+	if (checkForAnswer('answer_options')){
+		backButton();
+		if (currentQuestion===quizObjectJSON.length){
+			document.getElementById('finish_button').parentNode.removeChild(document.getElementById('finish_button'));
+			document.getElementById('next_button').disabled=false;
+			populatePastAnswer(1);
+			document.getElementById('back_button').disabled=true;
+		}
+		currentQuestion=1;
+	}
+	
+}
+
+</script>
+</head>
+<body>
+	<h3>Avi's Quiz</h3>
+	<div id="welcome_div">WELCOME to my quiz! Please click <b>"Next"</b> to continue</div>
+	<div id="quiz_area_div">
+	</div>
+	<div id="final_score_area">
+	</div>
+	<div id="quiz_navigation_bar">
+		<form id="quiz_navigation_form">
+			<input type="button" value="Next" id="next_button" onclick="nextButtonOnclick()">
+		</form>
+	</div>
+</body>
+</html>
